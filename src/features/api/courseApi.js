@@ -13,7 +13,7 @@ export const courseApi = createApi({
   endpoints: (builder) => ({
     createCourse: builder.mutation({
       query: ({ courseTitle, category }) => ({
-        url: "",
+        url: "/",
         method: "POST",
         body: { courseTitle, category },
       }),
@@ -21,16 +21,13 @@ export const courseApi = createApi({
     }),
     getSearchCourse: builder.query({
       query: ({ searchQuery, categories, sortByPrice }) => {
-        // Build query string
         let queryString = `/search?query=${encodeURIComponent(searchQuery)}`;
 
-        // append category
         if (categories && categories.length > 0) {
           const categoriesString = categories.map(encodeURIComponent).join(",");
           queryString += `&categories=${categoriesString}`;
         }
 
-        // Append sortByPrice if available
         if (sortByPrice) {
           queryString += `&sortByPrice=${encodeURIComponent(sortByPrice)}`;
         }
@@ -49,7 +46,7 @@ export const courseApi = createApi({
     }),
     getCreatorCourse: builder.query({
       query: () => ({
-        url: "",
+        url: "/",
         method: "GET",
       }),
       providesTags: ["Refetch_Creator_Course"],

@@ -8,19 +8,23 @@ export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: USER_API,
-        credentials: 'include'
+        credentials: 'include',
+        prepareHeaders: (headers) => {
+            headers.set('Content-Type', 'application/json');
+            return headers;
+        }
     }),
     endpoints: (builder) => ({
         registerUser: builder.mutation({
             query: (inputData) => ({
-                url: "register",
+                url: "/register",
                 method: "POST",
                 body: inputData
             })
         }),
         loginUser: builder.mutation({
             query: (inputData) => ({
-                url: "login",
+                url: "/login",
                 method: "POST",
                 body: inputData
             }),
@@ -35,7 +39,7 @@ export const authApi = createApi({
         }),
         logoutUser: builder.mutation({
             query: () => ({
-                url: "logout",
+                url: "/logout",
                 method: "GET"
             }),
             async onQueryStarted(_, { queryFulfilled, dispatch }) {
@@ -48,7 +52,7 @@ export const authApi = createApi({
         }),
         loadUser: builder.query({
             query: () => ({
-                url: "profile",
+                url: "/profile",
                 method: "GET"
             }),
             async onQueryStarted(_, { queryFulfilled, dispatch }) {
@@ -62,10 +66,9 @@ export const authApi = createApi({
         }),
         updateUser: builder.mutation({
             query: (formData) => ({
-                url: "profile/update",
+                url: "/profile/update",
                 method: "PUT",
-                body: formData,
-                credentials: "include"
+                body: formData
             })
         })
     })

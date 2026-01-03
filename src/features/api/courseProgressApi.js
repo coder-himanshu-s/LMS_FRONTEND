@@ -8,6 +8,10 @@ export const courseProgressApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: COURSE_PROGRESS_API,
     credentials: "include",
+    prepareHeaders: (headers) => {
+      headers.set('Content-Type', 'application/json');
+      return headers;
+    }
   }),
   endpoints: (builder) => ({
     getCourseProgress: builder.query({

@@ -8,6 +8,10 @@ export const purchaseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: COURSE_PURCHASE_API,
     credentials: "include",
+    prepareHeaders: (headers) => {
+      headers.set('Content-Type', 'application/json');
+      return headers;
+    }
   }),
   endpoints: (builder) => ({
     createOrder: builder.mutation({
@@ -32,7 +36,7 @@ export const purchaseApi = createApi({
     }),
     getPurchasedCourses: builder.query({
       query: () => ({
-        url: `/`,
+        url: "/",
         method: "GET",
       }),
     }),
